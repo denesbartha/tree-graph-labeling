@@ -27,7 +27,7 @@ Calling the main procedure `get_labeled_graphs(L, maxlabel)` will print out all 
 ##Examples
 
 - *L=[0, 1, 2]*
->>labelings:  
+>labelings:  
 *[0, 0, 0]*  
 *[0, 1, 0]*  
 *[0, 1, 1]*  
@@ -37,7 +37,7 @@ Calling the main procedure `get_labeled_graphs(L, maxlabel)` will print out all 
 Count of possible labelings: *6*
 
 - *L=[0, 1, 2, 3, 1, 2, 3]*
->>labelings:  
+>labelings:  
 *[0, 0, 0, 0, 0, 0, 0]*
 *[0, 0, 0, 1, 0, 0, 0]*
 *[0, 0, 1, 0, 0, 0, 0]*
@@ -113,7 +113,7 @@ Count of possible labelings: *6*
 Count of possible labelings: *72*
 
 - *L=[0, 1, 2, 3, 4, 2, 3]*
->>labelings:  
+>labelings:  
 *[0, 0, 0, 0, 0, 0, 0]*
 *[0, 0, 0, 0, 0, 0, 1]*
 *[0, 0, 0, 0, 0, 1, 0]*
