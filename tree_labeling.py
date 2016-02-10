@@ -1,9 +1,8 @@
-__author__ = "Dénes Bartha"
+__author__ = "Denes Bartha"
 __copyright__ = "Copyright 2016, Tree Labeling Project"
-
 __license__ = "GPL"
 __version__ = "3.0"
-__maintainer__ = "Dénes Bartha"
+__maintainer__ = "Denes Bartha"
 __email__ = "denesb@gmail.com"
 
 from collections import deque
