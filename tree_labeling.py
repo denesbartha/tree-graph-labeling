@@ -96,7 +96,7 @@ def _next_labeling(t, et, n, en, max_label):
         et: a dictionary that contains the nodes of the "equivalence-tree" created from the given tree
         n: the actual node of the given t tree
         en: the actual node of the given et "equivalence-tree"
-        max_label: an int that specifies the labeling alphabet's size (the labels come from the set 0..maxlabel)
+        max_label: an int that specifies the labeling alphabet's size (the labels come from the set 0..max_label)
 
     Returns:
         bool: true if it generated all the labelings for the actual branch
@@ -471,12 +471,12 @@ def get_labeled_graphs(lst, max_label=2):
         raise ValueError("The given object should be a nonempty list that contains a valid pre-order traversal of a "
                          "free-tree...")
     if type(max_label) is not int or max_label <= 0:
-        raise ValueError("maxlabel should be a positive integer...")
+        raise ValueError("max_label should be a positive integer...")
 
     (lst, t, et) = gen_tree_from_list(lst)
-    print lst, "\n"
+    # print lst, "\n"
     labeling_cnt = 0
     for lblvect in next_labeling(t, et, max_label):
         labeling_cnt += 1
-        print lblvect
-    print "Count of possible labelings:", labeling_cnt
+        yield lblvect
+    # print "Count of possible labelings:", labeling_cnt
