@@ -89,7 +89,7 @@ def copy_branch_labeling(t, source_node, dest_node):
 
 
 def _next_labeling(t, et, n, en, max_label):
-    """
+    """Generates the next proper labeling of the given tree.
 
     Args:
         t: a dictionary that contains the nodes of a labeled tree
@@ -107,7 +107,7 @@ def _next_labeling(t, et, n, en, max_label):
         for j in xrange(et[eqnode].m):
             anode = t[n].children_list[nind + j]
             # if the label of the actual node is a valid labeling and the next labeling of the given node is also
-            # valid (we are not at the end of the labeling if the current branch)
+            # valid (we are not at the end of the labeling of the current branch)
             if t[anode].label < max_label and _next_labeling(t, et, anode, eqnode, max_label):
                 # for every equivalent siblings of the node till the actual equivalent index (j)
                 for k in xrange(j):
@@ -334,7 +334,7 @@ def gen_eq_tree(t, centers):
     # sort the tree
     sort_tree(t, t[0])
     # if the tree is symmetric (it must have 2 centers)
-    if len(centers) == 2 and is_symmetric(t):
+    if len(t) == 2 or len(centers) == 2 and is_symmetric(t):
         t[0].symm = True
         # if the graph is symmetric => add a new node that has two children: the previous root node and the first child
         # of the root
@@ -342,6 +342,7 @@ def gen_eq_tree(t, centers):
         t[-1] = Node(None, 0)
         t[-1].children_list = [0, 1]
         t[0].parent = -1
+        t[1].parent = -1
         # remove the edge between the old root and it's first child
         t[0].children_list.remove(1)
         # sort the tree again
@@ -409,7 +410,7 @@ def graph_labeling_to_list(t, keys):
     label_list = []
     for i in keys:
         label_list.append(t[i].label)
-    return label_list
+    return tuple(label_list)
 
 
 def next_labeling(t, et, max_label):
