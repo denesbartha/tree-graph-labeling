@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # coding: utf-8
 """
     tree-graph-labeling
@@ -6,11 +5,11 @@
 
     Generates all labelings of a given free tree with the specified alphabet.
 
-    :copyright: 2017, Dénes Bartha
-    :license: MIT, see LICENSE for more details
-    :version: 1.0.1
-    :email: denesb@gmail.com
-    :maintainer: Dénes Bartha
+    :copyright:     2017, Dénes Bartha
+    :license:       MIT, see LICENSE for more details
+    :version:       1.0.2
+    :email:         denesb@gmail.com
+    :maintainer:    Dénes Bartha
 """
 from collections import deque
 
@@ -22,8 +21,8 @@ class Node(object):
         """Initializes the node object.
 
         Args:
-            parent: the parent node of the node
-            distance: the distance from the root node
+            parent:     the parent node of the node
+            distance:   the distance from the root node
         """
         self.parent = parent
         self.symm = False
@@ -46,8 +45,8 @@ def sort_tree(t, node):
     at the count of their children.
 
     Args:
-        t: a dictionary that contains the nodes of a labeled tree
-        node: the actual node of the tree (Node object)
+        t:      a dictionary that contains the nodes of a labeled tree
+        node:   the actual node of the tree (Node object)
     """
     node.ordervect = [len(node.children_list)]
     if node.children_list:
@@ -67,8 +66,8 @@ def reset_labeling(t, s):
     """Resets the labeling of given branch of the tree.
 
     Args:
-        t: a dictionary that contains the nodes of a labeled tree
-        s: the actual node of the tree
+        t:  a dictionary that contains the nodes of a labeled tree
+        s:  the actual node of the tree
     """
     t[s].label = 0
     for n in t[s].children_list:
@@ -79,9 +78,9 @@ def copy_branch_labeling(t, source_node, dest_node):
     """Copies a branch's labeling of the given tree from one node to another.
 
     Args:
-        t: a dictionary that contains the nodes of a labeled tree
-        source_node: the source node
-        dest_node: the destination node
+        t:              a dictionary that contains the nodes of a labeled tree
+        source_node:    the source node
+        dest_node:      the destination node
     """
     t[dest_node].label = t[source_node].label
     for i in xrange(len(t[source_node].children_list)):
@@ -92,11 +91,11 @@ def _next_labeling(t, et, n, en, max_label):
     """Generates the next proper labeling of the given tree.
 
     Args:
-        t: a dictionary that contains the nodes of a labeled tree
-        et: a dictionary that contains the nodes of the "equivalence-tree" created from the given tree
-        n: the actual node of the given t tree
-        en: the actual node of the given et "equivalence-tree"
-        max_label: an int that specifies the labeling alphabet's size (the labels come from the set 0..max_label)
+        t:          a dictionary that contains the nodes of a labeled tree
+        et          a dictionary that contains the nodes of the "equivalence-tree" created from the given tree
+        n:          the actual node of the given t tree
+        en:         the actual node of the given et "equivalence-tree"
+        max_label:  an int that specifies the labeling alphabet's size (the labels come from the set 0..max_label)
 
     Returns:
         bool: true if it generated all the labelings for the actual branch
@@ -140,10 +139,10 @@ def is_symmetric(t):
     we got the same amount of nodes. It requires that the t must be ordered.
 
     Args:
-        t: a dictionary that contains the nodes of a labeled tree
+        t:      a dictionary that contains the nodes of a labeled tree
 
     Returns:
-        bool: the tree is symmetric or not
+        bool:   the tree is symmetric or not
     """
     if len(t) == 1:
         return False
@@ -166,10 +165,10 @@ def find_center(lst):
     two centers.
 
     Args:
-        lst: a list that contains a pre-order traversal of a free-tree
+        lst:    a list that contains a pre-order traversal of a free-tree
 
     Returns:
-        list: contains one or two centers of the tree
+        list:   contains one or two centers of the tree
     """
     # create a list that contains the original indexes as well
     ind_lst = zip(lst, range(len(lst)))
@@ -238,11 +237,11 @@ def balance_tree_list(lst, centers):
     A balanced tree is a rooted tree whose root is the same as one of the tree's centers.
 
     Args:
-        lst: a list that contains a pre-order traversal of a free-tree
-        centers: the center nodes (one or two) of the given tree
+        lst:        a list that contains a pre-order traversal of a free-tree
+        centers:    the center nodes (one or two) of the given tree
 
     Returns:
-        list: a pre-order traversal of the balanced tree
+        list:       a pre-order traversal of the balanced tree
     """
     (distance, index) = min(centers, key=lambda c: c[1])
     # if the center is the original root node => we don't need to balance the tree
@@ -293,9 +292,9 @@ def eq_subtree(t, et, n, en):
     """Generates the "equivalence-tree" from the given rooted tree.
 
     Args:
-        t: a dictionary that contains the nodes of a labeled tree
+        t:  a dictionary that contains the nodes of a labeled tree
         et: a dictionary that contains the nodes of the "equivalence-tree" created from the given tree
-        n: the actual node of the given t tree
+        n:  the actual node of the given t tree
         en: the actual node of the given et "equivalence-tree"
     """
     i = 0
@@ -324,8 +323,8 @@ def gen_eq_tree(t, centers):
    multiplicity (it stores an equivalent part only once).
 
     Args:
-        t: a dictionary that contains the nodes of a labeled tree
-        centers: the center nodes (one or two) of the given tree
+        t:          a dictionary that contains the nodes of a labeled tree
+        centers:    the center nodes (one or two) of the given tree
 
     Returns:
         dictionary: contains the nodes of a labeled tree
@@ -336,8 +335,7 @@ def gen_eq_tree(t, centers):
     # if the tree is symmetric (it must have 2 centers)
     if len(t) == 2 or len(centers) == 2 and is_symmetric(t):
         t[0].symm = True
-        # if the graph is symmetric => add a new node that has two children: the previous root node and the first child
-        # of the root
+        # symmetric tree: add a new node that has two children: the previous root node and the first child of the root
         root_id = -1
         t[-1] = Node(None, 0)
         t[-1].children_list = [0, 1]
@@ -363,12 +361,12 @@ def gen_tree_from_list(lst):
     """Generates a directed, labeled tree from the given list.
 
     Args:
-        lst: a list that contains a pre-order traversal of a free-tree
+        lst:        a list that contains a pre-order traversal of a free-tree
 
     Returns:
-        list: a list that contains a pre-order traversal of a balanced tree (according to the given tree)
+        list:       a list that contains a pre-order traversal of a balanced tree (according to the given tree)
         dictionary: contains the nodes of a labeled tree
-        dictionary: the nodes of the "equivalence-tree" created from the given tree
+        dictionary: the nodes ofchildren_list the "equivalence-tree" created from the given tree
     """
 
     if len(lst) > 2:
@@ -400,11 +398,11 @@ def graph_labeling_to_list(t, keys):
     """Creates a list that contains the tree's labels (according to the pre-order traversal).
 
     Args:
-        t: a dictionary that contains the nodes of a labeled tree
-        keys: sorted keys of the given t
+        t:      a dictionary that contains the nodes of a labeled tree
+        keys:   sorted keys of the given t
 
     Returns:
-        list: contains the tree's labels
+        list:   contains the tree's labels
     """
 
     label_list = []
@@ -413,41 +411,67 @@ def graph_labeling_to_list(t, keys):
     return tuple(label_list)
 
 
-def next_labeling(t, et, max_label):
+def next_labeling(t, et, max_label, edge_labeling):
     """Yields all the labelings of a tree.
 
     Args:
-        t: a dictionary that contains the nodes of a labeled tree
-        et: a dictionary that contains the nodes of the "equivalence-tree" created from the given tree
-        max_label: an int that specifies the labeling alphabet's size
+        t:              a dictionary that contains the nodes of a labeled tree
+        et:             a dictionary that contains the nodes of the "equivalence-tree" created from the given tree
+        max_label:      an int that specifies the labeling alphabet's size
+        edge_labeling:  edge or vertex labeling
 
     Yields:
-        list: the next labeling of the given tree
+        list:           the next labeling of the given tree
     """
 
     keys = sorted(t)
     if t[0].symm:
-        keys.remove(-1)
-        yield graph_labeling_to_list(t, keys)
-        while _next_labeling(t, et, -1, -1, max_label):
-            # if the tree is symmetric => the whole process ends when the "fictive" center node's labeling changes
-            if t[-1].label != 0:
-                break
+        if edge_labeling:
+            # remove the temporary and the real root nodes' from the keys
+            keys.remove(-1)
+            keys.remove(0)
             yield graph_labeling_to_list(t, keys)
+            while _next_labeling(t, et, -1, -1, max_label):
+                # if the tree is symmetric => the whole process ends when the "fictive" center node's labeling changes
+                if t[-1].label != 0:
+                    break
+                # skip the "redundant" labelings
+                if t[0].label == 0 or t[1].label != 0:
+                    yield graph_labeling_to_list(t, keys)
+        else:
+            # vertex labeling
+            keys.remove(-1)
+            yield graph_labeling_to_list(t, keys)
+            while _next_labeling(t, et, -1, -1, max_label):
+                # if the tree is symmetric => the whole process ends when the "fictive" center node's labeling changes
+                if t[-1].label != 0:
+                    break
+                yield graph_labeling_to_list(t, keys)
     else:
-        yield graph_labeling_to_list(t, keys)
-        while _next_labeling(t, et, 0, 0, max_label):
+        if edge_labeling:
+            # remove the root node from the keys
+            keys.remove(0)
             yield graph_labeling_to_list(t, keys)
+            while _next_labeling(t, et, 0, 0, max_label):
+                # if the root node's label has changed => terminate (since we shift each vertex label to the parent's
+                # edge)
+                if t[0].label != 0:
+                    break
+                yield graph_labeling_to_list(t, keys)
+        else:
+            yield graph_labeling_to_list(t, keys)
+            while _next_labeling(t, et, 0, 0, max_label):
+                yield graph_labeling_to_list(t, keys)
 
 
 def is_proper_traversal(lst):
     """Determines whether the given list is a valid nonempty pre-order traversal of a tree or not.
 
     Args:
-        lst: a list that contains integers
+        lst:    a list that contains integers
 
     Returns:
-        bool: the given list is valid or not
+        bool:   the given list is valid or not
     """
 
     if len(lst) == 0 or lst[0] != 0:
@@ -460,12 +484,14 @@ def is_proper_traversal(lst):
     return type(lst[-1]) == int
 
 
-def get_labeled_graphs(lst, max_label=2):
-    """Prints out all the given free-tree's labelings.
+def get_labeled_graphs(lst, max_label=2, edge_labeling=False):
+    """Generates all the given free-tree's vertex / edge labelings.
 
     Args:
-        lst: a list that contains a pre-order traversal of a free-tree
-        max_label: an int that specifies the labeling alphabet's size
+        lst:            a list that contains a pre-order traversal of a free-tree
+        max_label:      an int that specifies the labeling alphabet's size
+        edge_labeling:  if this is set to true the function generates the edge labelings of the given tree (otherwise
+                        the vertex labelings)
     """
 
     if type(lst) is not list or not is_proper_traversal(lst):
@@ -477,7 +503,7 @@ def get_labeled_graphs(lst, max_label=2):
     (lst, t, et) = gen_tree_from_list(lst)
     # print lst, "\n"
     labeling_cnt = 0
-    for lblvect in next_labeling(t, et, max_label):
+    for lblvect in next_labeling(t, et, max_label, edge_labeling):
         labeling_cnt += 1
         yield lblvect
     # print "Count of possible labelings:", labeling_cnt

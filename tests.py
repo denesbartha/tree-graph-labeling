@@ -65,5 +65,9 @@ class TestTreeLabeling(unittest.TestCase):
         assert len(self.gen_colour_lst(tree_labeling.get_labeled_graphs([0, 1, 1, 2], max_label=3))) == 45
         assert len(self.gen_colour_lst(tree_labeling.get_labeled_graphs([0, 1, 2, 3, 1, 2, 3]))) == 72
 
+        # edge labelings
+        assert len(self.gen_colour_lst(tree_labeling.get_labeled_graphs([0, 1, 2, 2, 1, 1], 2, True))) == 12
+        assert len(self.gen_colour_lst(tree_labeling.get_labeled_graphs([0, 1, 2, 2, 1, 1], 3, True))) == 99
+
 if __name__ == '__main__':
     unittest.main()
